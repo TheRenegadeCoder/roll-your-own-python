@@ -1,3 +1,29 @@
+def minimum(*args, **kwargs):
+  '''
+  Replicates the built-in min function
+  
+  Source: https://therenegadecoder.com/code/roll-your-own-minimum-function-in-python/
+  '''
+  if len(args) == 1: # must be an iterable
+    args = args[0]
+    iterator = iter(args)  # will crash if not iterable
+    if not args:
+      if "default" in kwargs:
+        return kwargs.get("default")
+      else:
+        raise ValueError("min() arg is an empty sequence")
+  key = kwargs.get("key", lambda x: x)
+  iterator = iter(args)
+  smallest = next(iterator)
+  while True:
+    try:
+      test = next(iterator)
+      if key(test) < key(smallest):
+        smallest = test
+    except StopIteration:
+      break
+  return smallest  
+
 def power(base, exp, mod=None):
   '''
   Replicates the built-in power function.
